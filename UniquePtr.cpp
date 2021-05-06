@@ -19,7 +19,7 @@ UniquePtr::UniquePtr(UniquePtr&& o) noexcept {
 // оператор присваивания через перемещение
 UniquePtr& UniquePtr::operator=(UniquePtr&& o) noexcept {
     if (&o != this) {
-        delete[] _ptr;
+        reset();
         this->_ptr = o._ptr;
         o._ptr = nullptr;
     }
@@ -33,7 +33,7 @@ UniquePtr& UniquePtr::operator=(UniquePtr&& o) noexcept {
 // Не забывать про старую память
 UniquePtr& UniquePtr::operator=(ValueType* ptr) {
     _ptr = ptr;
-    ptr = nullptr;
+    delete[] ptr;
     return *this;
 }
 
@@ -58,7 +58,7 @@ void UniquePtr::release() {
 
 // возвращает, внутри nullptr или нет
 UniquePtr::operator bool() const {
-    return (_ptr == nullptr);
+    return (_ptr != nullptr);
 }
 
 // разыменовывание

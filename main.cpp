@@ -12,14 +12,15 @@ int main() {
     cout << "p2 = " << p2 << endl;
     p2 = std::move(p1);
     cout << "p1 = " << p1 <<  " p2 = " << p2 << endl;
+    
     //UniquePtr p2(p1); // копирование, нельзя!
-   /* UniquePtr p2(std::move(p1));
-    p2 = std::move(p1);
 
-    UniquePtr p2(nullptr);
+    UniquePtr p3(nullptr);
+    cout << "p3 = " << p3 << endl;
     //p2 = p2; // копирование, не заработает
-    p2 = UniquePtr(nullptr); // перемещение
-    */
+    p3 = UniquePtr(nullptr); // перемещение
+    cout << "p3 = " << p3 << endl;
+    
 
 
     // 1. Проверить, что освобождает память после деструктора
