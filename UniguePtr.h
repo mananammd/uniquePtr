@@ -50,4 +50,6 @@ public:
     // возвращает указатель
     ValueType* get() const;
 
+    ~UniquePtr();
+
 };

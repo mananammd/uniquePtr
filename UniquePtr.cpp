@@ -1,9 +1,7 @@
 #include "UniguePtr.h"
 
 // Конструктор
-UniquePtr::UniquePtr() {
-
-}
+UniquePtr::UniquePtr() {}
 
 // Конструктор из указателя
 UniquePtr::UniquePtr(ValueType* ptr) {
@@ -32,8 +30,8 @@ UniquePtr& UniquePtr::operator=(UniquePtr&& o) noexcept {
 // оператор присваивания - присвоить новый указатель
 // Не забывать про старую память
 UniquePtr& UniquePtr::operator=(ValueType* ptr) {
+    reset();
     _ptr = ptr;
-    delete[] ptr;
     return *this;
 }
 
@@ -75,7 +73,9 @@ ValueType* UniquePtr::operator->() const {
 ValueType* UniquePtr::get() const {  
     return _ptr;
 }
-
+UniquePtr::~UniquePtr() {
+    reset();
+}
 
 
 
