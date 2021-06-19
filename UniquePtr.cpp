@@ -1,79 +1,75 @@
-#include "UniguePtr.h"
+#include "UniquePtr.h"
 
-// Конструктор
-UniquePtr::UniquePtr() {}
+template<class T>
+UniquePtr<T>::UniquePtr() {}
 
-// Конструктор из указателя
-UniquePtr::UniquePtr(ValueType* ptr) {
+template<class T>
+UniquePtr<T>::UniquePtr(T* ptr) {
     _ptr = ptr;
 }
 
-// Конструктор перемещения
-UniquePtr::UniquePtr(UniquePtr&& o) noexcept {
+template<class T>
+UniquePtr<T>::UniquePtr(UniquePtr<T>&& o) noexcept {
     this->_ptr = o._ptr;
     o._ptr = nullptr;
 }
 
-// оператор присваивания через перемещение
-UniquePtr& UniquePtr::operator=(UniquePtr&& o) noexcept {
+template<class T>
+UniquePtr<T>& UniquePtr<T>::operator=(UniquePtr<T>&& o) noexcept {
     if (&o != this) {
         reset();
         this->_ptr = o._ptr;
         o._ptr = nullptr;
     }
     return *this;
-    // o == this ?
-    // на этот момент тут уже что-то может быть
-    // надо почистить память
 }
 
-// оператор присваивания - присвоить новый указатель
-// Не забывать про старую память
-UniquePtr& UniquePtr::operator=(ValueType* ptr) {
+template<class T>
+UniquePtr<T>& UniquePtr<T>::operator=(T* ptr) {
     reset();
     _ptr = ptr;
     return *this;
 }
 
-// сбрасывает _ptr в nullptr
-// не забыть почистить память память память!
-void UniquePtr::reset() {
+template<class T>
+void UniquePtr<T>::reset() {
     delete[] _ptr;
     _ptr = nullptr;
 }
 
-// reset + присвоение нового указателя
-void UniquePtr::reset(ValueType* ptr) {
+template<class T>
+void UniquePtr<T>::reset(T* ptr) {
     reset();
     _ptr = ptr;
 }
 
-// "Освобождение" указателя
-// без удаления памяти
-void UniquePtr::release() {
+template<class T>
+void UniquePtr<T>::release() {
     _ptr = nullptr;
 }
 
-// возвращает, внутри nullptr или нет
-UniquePtr::operator bool() const {
+template<class T>
+UniquePtr<T>::operator bool() const {
     return (_ptr != nullptr);
 }
 
-// разыменовывание
-ValueType& UniquePtr::operator*() const {
+template<class T>
+T& UniquePtr<T>::operator*() const {
     return *_ptr;
 }
 
-// оператор стрелочки
-ValueType* UniquePtr::operator->() const {
+template<class T>
+T* UniquePtr<T>::operator->() const {
     return _ptr;
 }
 
-// возвращает указатель
-ValueType* UniquePtr::get() const {  
+template<class T>
+T* UniquePtr<T>::get() const {  
     return _ptr;
 }
-UniquePtr::~UniquePtr() {
+
+template<class T>
+UniquePtr<T>::~UniquePtr() {
     reset();
 }
 

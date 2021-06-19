@@ -1,25 +1,23 @@
-#include "UniguePtr.h"
+#include "UniquePtr.h"
+//#include "template.cpp"
 
 using namespace std;
-
+//template<class T>
 int main() {
-    char* data = new char[256];
-
-    UniquePtr ptr(data);
+    int* data = new int[256];
+    UniquePtr<int> ptr(data);
     cout << "ptr = " << ptr << endl;
-    UniquePtr p1;
-    UniquePtr p2(std::move(p1));
+    UniquePtr<int> p1;
+    UniquePtr<int> p2(std::move(p1));
     cout << "p2 = " << p2 << endl;
     p2 = std::move(p1);
-    cout << "p1 = " << p1 <<  " p2 = " << p2 << endl;
+    cout << "p1 = " << p1 << endl << "p2 = " << p2 << endl;
     
     //UniquePtr p2(p1); // копирование, нельзя!
 
-    UniquePtr p3(nullptr);
+    UniquePtr<char> p3(nullptr);
     cout << "p3 = " << p3 << endl;
     //p2 = p2; // копирование, не заработает
-    p3 = UniquePtr(nullptr); // перемещение
-    cout << "p3 = " << p3 << endl;
     
 
 
